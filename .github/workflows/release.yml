@@ -2,10 +2,8 @@ name: Build and release FFmpeg
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - 'README.md'
+    tags:
+      - "v*.*"
 
 jobs:
   package-windows:
@@ -44,8 +42,8 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
-          name: "FFmpeg 5.1.4 (audio-only)"
           body: "Release FFmpeg v5.1.4 (audio-only) for MSVC"
           files: artifacts/release/*
         env:
