@@ -3,7 +3,7 @@ name: Build FFmpeg
 on:
   push:
     branches:
-      - develop
+      - dev
     paths-ignore:
       - 'README.md'
 
