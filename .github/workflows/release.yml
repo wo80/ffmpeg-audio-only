@@ -1,9 +1,9 @@
-name: Build FFmpeg
+name: Build and release FFmpeg
 
 on:
   push:
     branches:
-      - develop
+      - main
     paths-ignore:
       - 'README.md'
 
@@ -42,14 +42,11 @@ jobs:
         run: ./build-windows.sh
         shell: msys2 {0}
 
-      - name: Upload static
-        uses: actions/upload-artifact@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: ffmpeg-audio-win64-static
-          path: artifacts/*-static/*
-
-      - name: Upload shared
-        uses: actions/upload-artifact@v4
-        with:
-          name: ffmpeg-audio-win64-shared
-          path: artifacts/*-shared/*
+          name: "FFmpeg 5.1.4 (audio-only)"
+          body: "Release FFmpeg v5.1.4 (audio-only) for MSVC"
+          files: artifacts/release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
