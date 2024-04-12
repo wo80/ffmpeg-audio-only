@@ -1,0 +1,52 @@
+name: Build and release FFmpeg
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+
+jobs:
+  package-windows:
+    name: Windows build
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        sys: [ MINGW64 ]
+
+    steps:
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Setup msys2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          update: true
+          install: >-
+            base-devel
+            curl
+            yasm
+            zip
+          pacboy: >-
+            cmake:p
+          path-type: inherit
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build FFmpeg
+        run: ./build-windows.sh
+        shell: msys2 {0}
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "FFmpeg 5.1.4 (audio-only)"
+          body: "Release FFmpeg v5.1.4 (audio-only) for MSVC"
+          files: artifacts/release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

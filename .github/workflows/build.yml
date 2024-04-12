@@ -1,0 +1,55 @@
+name: Build FFmpeg
+
+on:
+  push:
+    branches:
+      - develop
+    paths-ignore:
+      - 'README.md'
+
+jobs:
+  package-windows:
+    name: Windows build
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        sys: [ MINGW64 ]
+
+    steps:
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Setup msys2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          update: true
+          install: >-
+            base-devel
+            curl
+            yasm
+            zip
+          pacboy: >-
+            cmake:p
+          path-type: inherit
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build FFmpeg
+        run: ./build-windows.sh
+        shell: msys2 {0}
+
+      - name: Upload static
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-audio-win64-static
+          path: artifacts/*-static/*
+
+      - name: Upload shared
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-audio-win64-shared
+          path: artifacts/*-shared/*
