@@ -36,20 +36,20 @@ jobs:
           path-type: inherit
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build FFmpeg
         run: ./build-windows.sh
         shell: msys2 {0}
 
       - name: Upload static
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ffmpeg-audio-win64-static
           path: artifacts/*-static/*
 
       - name: Upload shared
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ffmpeg-audio-win64-shared
           path: artifacts/*-shared/*
