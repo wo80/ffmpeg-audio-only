@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FFMPEG_VERSION=7.1.1
+FFMPEG_VERSION=8.0.1
 FFMPEG_TARBALL=ffmpeg-$FFMPEG_VERSION.tar.gz
 FFMPEG_TARBALL_URL=https://ffmpeg.org/releases/$FFMPEG_TARBALL
 
@@ -13,7 +13,6 @@ FFMPEG_CONFIGURE_FLAGS=(
     --disable-programs
     --disable-avdevice
     --disable-avfilter
-    --disable-postproc
     --disable-swscale
 
     --disable-network
