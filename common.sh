@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FFMPEG_VERSION=8.0.1
+FFMPEG_VERSION=8.1.1
 FFMPEG_TARBALL=ffmpeg-$FFMPEG_VERSION.tar.gz
 FFMPEG_TARBALL_URL=https://ffmpeg.org/releases/$FFMPEG_TARBALL
 
