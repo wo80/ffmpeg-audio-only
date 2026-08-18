@@ -19,7 +19,9 @@ jobs:
 
     steps:
       - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
 
       - name: Setup msys2
         uses: msys2/setup-msys2@v2
