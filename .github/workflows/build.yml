@@ -36,7 +36,7 @@ jobs:
           path-type: inherit
 
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Build FFmpeg
         run: ./build-windows.sh
